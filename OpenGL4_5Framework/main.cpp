@@ -437,8 +437,8 @@ VOID LoadResources(HWND hWnd)
 		-g_dwWindowWidth * 3 / 8, g_dwWindowHeight * 1 / 8 -  10 );
 
 	// ´´½¨ÎÆÀí
-	CTextureManager::CreateTextureFromFile( "../../GameMedia/textures/test.jpg", g_Texture );
-	CTextureManager::CreateTextureFromFile( "../../GameMedia/textures/Water02.jpg", g_TreeTexture );
+	CTextureManager::CreateTextureFromFile( "../../Res/NineGrids.png", g_Texture );
+	CTextureManager::CreateTextureFromFile( "../../Res/NineGrids.png", g_TreeTexture );
 
 	g_pMRTShader = new MRTShader;
 	g_pMRTShader->Create();
