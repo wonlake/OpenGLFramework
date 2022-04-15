@@ -22,7 +22,7 @@
 #define NEAR_DIST 0.1f
 
 // 全局变量:
-TCHAR szTitle[]		  = TEXT("OpenGL3_3Framework");
+TCHAR szTitle[]		  = TEXT("OpenGLFramework");
 TCHAR szWindowClass[] = TEXT("OpenGL");
 
 HDC		g_hDC  = NULL;

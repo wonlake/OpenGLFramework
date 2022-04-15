@@ -26,7 +26,7 @@ bool MRTShader::Create()
 
 	static char strVS[] =	
 	{
-		"#version 330\n"
+		"#version 460\n"
 		"\n"
 		"in vec3 pos;\n"
 		"in vec3 normal;\n"
@@ -51,7 +51,7 @@ bool MRTShader::Create()
 
 	static char strPS[] = 
 	{
-		"#version 330\n"
+		"#version 460\n"
 		"\n"
 		"uniform float g_FarDist;\n"
 		"uniform sampler2D testMap;\n"
@@ -59,6 +59,7 @@ bool MRTShader::Create()
 		"\n"
 		"in vec3 _normal;\n"
 		"in vec3 _tex;\n"
+		"out vec4 FragData[3];\n"
 		"\n"
 		"void main()\n"
 		"{\n"
@@ -68,9 +69,9 @@ bool MRTShader::Create()
 		"	vec3 n = normalize(_normal);\n"
 		"	n = (n + 1.0f) * 0.5f;\n"
 		"\n"
-		"	gl_FragData[0] = color1 * 0.8f + color2 * 0.2f;\n"
-		"	gl_FragData[1] = vec4( depth, depth, depth, 1.0f );\n"
-		"	gl_FragData[2] = vec4( n.x, n.y, n.z, 1.0f );\n"
+		"	FragData[0] = color1 * 0.8f + color2 * 0.2f;\n"
+		"	FragData[1] = vec4( depth, depth, depth, 1.0f );\n"
+		"	FragData[2] = vec4( n.x, n.y, n.z, 1.0f );\n"
 		"}\n"
 	};
 

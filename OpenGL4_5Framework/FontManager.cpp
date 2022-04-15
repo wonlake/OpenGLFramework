@@ -5,11 +5,7 @@
 #include "FontManager.h"
 #include "Utility.h"
 
-#ifdef _DEBUG
-#pragma comment( lib, "FreeType_d.lib" )
-#else
-#pragma comment( lib, "FreeType.lib" )
-#endif
+#pragma comment( lib, "libfreeType.lib" )
 
 FontManager::FontManager()
 {

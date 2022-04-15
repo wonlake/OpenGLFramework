@@ -8,13 +8,8 @@
 #define FREEIMAGE_LIB
 #include <FreeImage.h>
 
-#ifdef _DEBUG
-#pragma comment( lib, "freeimage_d.lib" )
-#pragma comment( lib, "glew32s_d.lib" )
-#else
-#pragma comment( lib, "freeimage.lib" )
-#pragma comment( lib, "glew32s.lib" )
-#endif
+#pragma comment( lib, "libfreeimage.lib" )
+#pragma comment( lib, "libglew.lib" )
 
 #pragma comment( lib, "opengl32.lib" )
 #pragma comment( lib, "glu32.lib" )

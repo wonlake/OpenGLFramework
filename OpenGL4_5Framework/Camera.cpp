@@ -282,7 +282,7 @@ BOOL CTrackBallCamera::HandleMessage( HWND hWnd, UINT uMsg, WPARAM wParam, LPARA
 
 void CTrackBallCamera::GetProjectMatrix( XMMATRIX* pMatProj )
 {
-	*pMatProj = m_matProject;
+	*pMatProj = *(XMMATRIX*)m_matProject;
 }
 
 void CTrackBallCamera::SetNearFarPlane( float fNear, float fFar )

@@ -5,7 +5,9 @@
 #pragma once
 
 #include <windows.h>
-#include <xnamath.h>
+#include <DirectXMath.h>
+
+using namespace DirectX;
 
 class CTrackBallCamera
 {
