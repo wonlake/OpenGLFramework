@@ -56,7 +56,7 @@ unsigned char* FontManager::CreateFontTexture(
 
 	do 
 	{
-		if( error = FT_Set_Pixel_Sizes( face, 0, uiFontSize ) )
+		if( error = FT_Set_Pixel_Sizes( face, 0, (FT_UInt)uiFontSize ) )
 			break;
 		FT_UInt glyph_index = FT_Get_Char_Index( face, iUnicode );
 		if( error = FT_Load_Glyph( face, glyph_index, FT_LOAD_DEFAULT ) )

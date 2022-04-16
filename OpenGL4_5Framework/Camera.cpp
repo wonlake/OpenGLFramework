@@ -147,7 +147,7 @@ VOID CTrackBallCamera::OnRotate( int x, int y )
 			return;
 		}
 
-		m_Angle = 90.0f * sqrt(dx * dx + dy * dy + dz * dz);
+		m_Angle = 90.0f * (float)sqrt(dx * dx + dy * dy + dz * dz);
 		
 		XMVECTOR axis = XMVectorSet( m_lastPos[1] * m_curPos[2] - m_lastPos[2] * m_curPos[1],
 			m_lastPos[0] * m_curPos[2] - m_lastPos[2] * m_curPos[0],
@@ -164,8 +164,8 @@ VOID CTrackBallCamera::OnTranslate( int x, int y )
 {
 	if( m_bTranslating )
 	{
-		m_curPos[0] = x;
-		m_curPos[1] = y;
+		m_curPos[0] = (float)x;
+		m_curPos[1] = (float)y;
 
 		m_X += ( m_curPos[0] - m_lastPos[0] ) * 8.0f / m_width * m_fWheelTranslateUnit;
 		m_Y += ( m_lastPos[1] - m_curPos[1] ) * 8.0f / m_height * m_fWheelTranslateUnit;
@@ -205,8 +205,8 @@ VOID CTrackBallCamera::EndRotate()
 VOID CTrackBallCamera::BeginMove( int x, int y )
 {		
 	m_bTranslating = TRUE;
-	m_lastPos[0] = x;
-	m_lastPos[1] = y;
+	m_lastPos[0] = (float)x;
+	m_lastPos[1] = (float)y;
 }
 
 VOID CTrackBallCamera::EndMove()

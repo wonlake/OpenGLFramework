@@ -157,9 +157,6 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	PAINTSTRUCT ps;
-	HDC hdc;
-
 	switch (message)
 	{
 	case WM_CREATE:						// 建立窗口
@@ -342,7 +339,7 @@ VOID Render()
 		glDrawBuffer( GL_COLOR_ATTACHMENT0 );
 		// 设定投影矩阵
 		XMMATRIX matOrtho = XMMatrixOrthographicLH(
-			g_dwWindowWidth, g_dwWindowHeight, NEAR_DIST, FAR_DIST );
+			(float)g_dwWindowWidth, (float)g_dwWindowHeight, NEAR_DIST, FAR_DIST );
 		GLint iWVP	  = glGetUniformLocation(pShaderInfo->uiProgram, "g_matWVP");
 		glUniformMatrix4fv( iWVP, 1, GL_FALSE, (float*)&(matOrtho) );
 	}
@@ -430,11 +427,11 @@ VOID LoadResources(HWND hWnd)
 
 	// 创建简单几何体
 	g_pShapeBox = CreateBox( 20.0f, 20.0f, 20.0f, 0.0f, 0.0f, 0.0f );
-	g_pQuad[0] = CreateZPlane( g_dwWindowWidth, g_dwWindowHeight );
-	g_pQuad[1] = CreateZPlane( g_dwWindowWidth / 4, g_dwWindowHeight / 4, 
-		-g_dwWindowWidth * 3 / 8, g_dwWindowHeight * 3 / 8 );
-	g_pQuad[2] = CreateZPlane( g_dwWindowWidth / 4, g_dwWindowHeight / 4,
-		-g_dwWindowWidth * 3 / 8, g_dwWindowHeight * 1 / 8 -  10 );
+	g_pQuad[0] = CreateZPlane( (float)g_dwWindowWidth, (float)g_dwWindowHeight );
+	g_pQuad[1] = CreateZPlane( g_dwWindowWidth / 4.0f, g_dwWindowHeight / 4.0f, 
+		-g_dwWindowWidth * 3.0f / 8, g_dwWindowHeight * 3.0f / 8 );
+	g_pQuad[2] = CreateZPlane( g_dwWindowWidth / 4.0f, g_dwWindowHeight / 4.0f,
+		-g_dwWindowWidth * 3.0f / 8, g_dwWindowHeight * 1.0f / 8 -  10 );
 
 	// 创建纹理
 	CTextureManager::CreateTextureFromFile( "../../Res/NineGrids.png", g_Texture );
@@ -568,15 +565,15 @@ VOID LoadResources(HWND hWnd)
 		// 数据偏移量
 		int offset = 0;
 		// 设定顶点X, Y, Z
-		glVertexAttribPointer( uiPos, 3, GL_FLOAT, GL_FALSE, pShapeInfo->uiElementSize, (GLvoid*)offset );
+		glVertexAttribPointer( uiPos, 3, GL_FLOAT, GL_FALSE, pShapeInfo->uiElementSize, NULL);
 		// 数据偏移量
 		offset = 12;
 		// 设定顶点法线
-		glVertexAttribPointer( uiNormal, 3, GL_FLOAT, GL_TRUE, pShapeInfo->uiElementSize, (GLvoid*)offset );
+		glVertexAttribPointer( uiNormal, 3, GL_FLOAT, GL_TRUE, pShapeInfo->uiElementSize, NULL);
 		// 数据偏移量
 		offset = 24;
 		// 设定纹理坐标
-		glVertexAttribPointer( uiTex, 2, GL_FLOAT, GL_FALSE, pShapeInfo->uiElementSize, (GLvoid*)offset );
+		glVertexAttribPointer( uiTex, 2, GL_FLOAT, GL_FALSE, pShapeInfo->uiElementSize, NULL);
 		// 取消绑定顶点数组对象
 		glBindVertexArray( 0 );
 	}
@@ -603,11 +600,11 @@ VOID LoadResources(HWND hWnd)
 		// 数据偏移量
 		int offset = 0;
 		// 设定顶点X, Y, Z
-		glVertexAttribPointer( uiPos, 3, GL_FLOAT, GL_FALSE, pShapeInfo->uiElementSize, (GLvoid*)offset );
+		glVertexAttribPointer( uiPos, 3, GL_FLOAT, GL_FALSE, pShapeInfo->uiElementSize, NULL);
 		// 数据偏移量
 		offset = 24;
 		// 设定纹理坐标
-		glVertexAttribPointer( uiTex, 2, GL_FLOAT, GL_FALSE, pShapeInfo->uiElementSize, (GLvoid*)offset );
+		glVertexAttribPointer( uiTex, 2, GL_FLOAT, GL_FALSE, pShapeInfo->uiElementSize, NULL);
 		// 取消绑定顶点数组对象
 		glBindVertexArray( 0 );
 	}

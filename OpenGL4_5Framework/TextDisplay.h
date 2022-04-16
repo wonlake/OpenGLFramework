@@ -30,17 +30,14 @@ public:
 public:
 	void Display();
 
-	void SetText( int iXPos, int iYPos, int iFontSize, 
-		LPCWSTR lpText, unsigned int uiColor );
+	void SetText( int iXPos, int iYPos, int iFontSize, LPCWSTR lpText, unsigned int uiColor );
 
-	VOID SetupInput( int iXPos, int iYPos, float Left, float Top,
-		float Right, float Bottom );
+	VOID SetupInput( int iXPos, int iYPos, int left, int top, int right, int bottom );
 
 	BOOL SetupShaders();
 	
-	static size_t RawToBitmap( void* pImageData, size_t uiImageDataSize, 
-		void* pBitmap, size_t uiBitmapSize,
-		size_t uiWidth, size_t uiHeight, int iBytesPerPixel );
+	static int RawToBitmap( void* pImageData, int uiImageDataSize, 
+		void* pBitmap, int uiBitmapSize, int uiWidth, int uiHeight, int iBytesPerPixel );
 
 	void SetFontFile( const char* pFontFile );
 

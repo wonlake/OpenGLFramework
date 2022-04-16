@@ -5,12 +5,15 @@
 //////////////////////////////////////////////////////////////////////////
 
 #include "TextureManager.h"
-#define FREEIMAGE_LIB
 #include <FreeImage.h>
 
+#ifdef _DEBUG
+#pragma comment( lib, "libfreeimage_d.lib" )
+#else
 #pragma comment( lib, "libfreeimage.lib" )
-#pragma comment( lib, "libglew.lib" )
+#endif
 
+#pragma comment( lib, "libglew.lib" )
 #pragma comment( lib, "opengl32.lib" )
 #pragma comment( lib, "glu32.lib" )
 

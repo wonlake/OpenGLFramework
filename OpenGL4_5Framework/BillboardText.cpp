@@ -36,7 +36,7 @@ VOID CBillboardText::UpdateText( LPCTSTR lpText )
 {
 	if( m_pTextDisplay )
 	{
-		m_pTextDisplay->SetText( m_vPos[0], m_vPos[1],
+		m_pTextDisplay->SetText( (int)m_vPos[0], (int)m_vPos[1],
 			m_dwSize, lpText, m_TextColor );
 	}	
 }

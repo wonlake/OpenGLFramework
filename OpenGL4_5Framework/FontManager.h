@@ -19,11 +19,11 @@ public:
 	~FontManager(void);
 
 public:
-	typedef struct BMP_DESC
+	struct BMP_DESC
 	{		
 		unsigned char* pBuffer;
-		unsigned int   dwWidth;
-		unsigned int   dwHeight;
+		int   dwWidth;
+		int   dwHeight;
 		int	iXOffset;
 		int iYOffset;
 		int iXAdvance;

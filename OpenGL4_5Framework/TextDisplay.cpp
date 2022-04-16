@@ -34,15 +34,15 @@ TextDisplay::~TextDisplay(void)
 		glDeleteTextures( 1, &m_uiTexture );
 }
 
-VOID TextDisplay::SetupInput( int iXPos, int iYPos, float Left, float Top,
-	float Right, float Bottom )
+VOID TextDisplay::SetupInput( int iXPos, int iYPos, int left, int top,
+	int right, int bottom )
 {	
 	//用于文本显示的顶点模板
 	UINT numViewPorts = 1;
 	GLint viewport[4] = { 0 };
 	glGetIntegerv( GL_VIEWPORT, viewport );
-	float fViewportWidth  = viewport[2];
-	float fViewportHeight = viewport[3];
+	auto fViewportWidth  = viewport[2];
+	auto fViewportHeight = viewport[3];
 
 	static CUSTOMVERTEX Vertices[] = 
 	{
@@ -65,10 +65,10 @@ VOID TextDisplay::SetupInput( int iXPos, int iYPos, float Left, float Top,
 			vecVertices[i] = Vertices[i];
 			if( i % 2 )
 			{
-				vecVertices[i].x = Vertices[i].x + iXPos + Right - Left;
+				vecVertices[i].x = Vertices[i].x + iXPos + right - left;
 				if( i / 2 )
 				{
-					vecVertices[i].y = Vertices[i].y - iYPos + Top - Bottom;
+					vecVertices[i].y = Vertices[i].y - iYPos + top - bottom;
 				}
 				else
 				{
@@ -80,7 +80,7 @@ VOID TextDisplay::SetupInput( int iXPos, int iYPos, float Left, float Top,
 				vecVertices[i].x = Vertices[i].x + iXPos;
 				if( i / 2 )
 				{
-					vecVertices[i].y = Vertices[i].y - iYPos + Top - Bottom;
+					vecVertices[i].y = Vertices[i].y - iYPos + top - bottom;
 				}
 				else
 				{
@@ -132,11 +132,11 @@ VOID TextDisplay::SetupInput( int iXPos, int iYPos, float Left, float Top,
 		// 数据偏移量
 		int offset = 0;
 		// 设定顶点X, Y, Z
-		glVertexAttribPointer( uiPos, 3, GL_FLOAT, GL_FALSE, sizeof(CUSTOMVERTEX), (GLvoid*)offset );
+		glVertexAttribPointer( uiPos, 3, GL_FLOAT, GL_FALSE, sizeof(CUSTOMVERTEX), NULL);
 		// 数据偏移量
 		offset = 12;
 		// 设定纹理坐标
-		glVertexAttribPointer( uiTex, 2, GL_FLOAT, GL_FALSE, sizeof(CUSTOMVERTEX), (GLvoid*)offset );
+		glVertexAttribPointer( uiTex, 2, GL_FLOAT, GL_FALSE, sizeof(CUSTOMVERTEX), NULL);
 		// 取消绑定顶点数组对象
 		glBindVertexArray( 0 );
 	}
@@ -198,11 +198,11 @@ void TextDisplay::SetText( int iXPos, int iYPos, int iFontSize,
 	LPCWSTR lpText, unsigned int uiColor )
 {
 	int dwSize			= iFontSize;	
-	size_t uiTextLength = wcslen( lpText );
+	auto uiTextLength = (int)wcslen( lpText );
 
-	DWORD dwImageWidth  = uiTextLength * dwSize;
+	auto dwImageWidth  = uiTextLength * dwSize;
 	float rows		    = dwImageWidth / 1024.0f;
-	DWORD dwImageHeight = ceil( rows ) * dwSize * 2;
+	auto dwImageHeight = (int)ceil( rows ) * dwSize * 2;
 
 	if( rows > 1.0f )
 		dwImageWidth = 1024;
@@ -210,13 +210,13 @@ void TextDisplay::SetText( int iXPos, int iYPos, int iFontSize,
 		dwImageHeight = 512;
 
 	int iBytesPerPixel	   = 4;
-	size_t uiImageDataSize = dwImageHeight * dwImageWidth * iBytesPerPixel;
+	int uiImageDataSize = dwImageHeight * dwImageWidth * iBytesPerPixel;
 	BYTE* pImageData	   = new BYTE[uiImageDataSize];
 	BYTE* pData			   = NULL;
 	ZeroMemory( pImageData, uiImageDataSize );
-	size_t XOffset	   = 0;
-	size_t YOffset	   = dwSize;
-	size_t dwMaxHeight = 0;
+	int XOffset	   = 0;
+	int YOffset	   = dwSize;
+	int dwMaxHeight = 0;
 	
 	BYTE *pBlue  = (BYTE*)&uiColor;
 	BYTE* pGreen = pBlue + 1;
@@ -228,10 +228,10 @@ void TextDisplay::SetText( int iXPos, int iYPos, int iFontSize,
 		ZeroMemory( &desc, sizeof(desc) );
 		pData = m_pFontManager->CreateFontTexture(
 			lpText[i], dwSize, &desc );
-		size_t width = desc.dwWidth;
-		size_t height = desc.dwHeight;
+		int width = desc.dwWidth;
+		int height = desc.dwHeight;
 
-		int dwPitch = width * iBytesPerPixel;
+		auto dwPitch = width * iBytesPerPixel;
 		while( dwPitch % 4 != 0 )
 			dwPitch++;
 		if( XOffset + desc.iXAdvance > 1024 )
@@ -248,8 +248,8 @@ void TextDisplay::SetText( int iXPos, int iYPos, int iFontSize,
 		{
 			for( int w = 0; w < width; ++w )
 			{
-				int X = (XOffset + desc.iXOffset + w) * iBytesPerPixel;
-				int Y = (YOffset - desc.iYOffset + h) * dwImageWidth * iBytesPerPixel;
+				auto X = (XOffset + desc.iXOffset + w) * iBytesPerPixel;
+				auto Y = (YOffset - desc.iYOffset + h) * dwImageWidth * iBytesPerPixel;
 				if( Y + X >= uiImageDataSize - iBytesPerPixel )
 					continue;
 				{
@@ -265,7 +265,7 @@ void TextDisplay::SetText( int iXPos, int iYPos, int iFontSize,
 	}	
 
 	{			
-		size_t uiBitmapSize = RawToBitmap( pImageData, uiImageDataSize, NULL, 0,
+		auto uiBitmapSize = RawToBitmap( pImageData, uiImageDataSize, NULL, 0,
 			dwImageWidth, dwImageHeight, iBytesPerPixel );
 		BYTE* pBitmapBuffer = new BYTE[uiBitmapSize];
 		RawToBitmap( pImageData, uiImageDataSize, pBitmapBuffer, uiBitmapSize,
@@ -274,7 +274,7 @@ void TextDisplay::SetText( int iXPos, int iYPos, int iFontSize,
 		if( m_uiTexture )
 			glDeleteTextures( 1, &m_uiTexture );
 		
-		CTextureManager::CreateTextureFromMemory( pBitmapBuffer, uiBitmapSize, m_uiTexture );
+		CTextureManager::CreateTextureFromMemory( pBitmapBuffer, (GLuint)uiBitmapSize, m_uiTexture );
 		
 		SAFE_DELETEARRAY( pBitmapBuffer );
 	}
@@ -285,19 +285,19 @@ void TextDisplay::SetText( int iXPos, int iYPos, int iFontSize,
 		SetupShaders();				
 	}
 
-	SetupInput( iXPos, iYPos, 0, 0,
-		dwImageWidth, dwImageHeight );	
+	SetupInput( iXPos, iYPos, 0, 0, (int)dwImageWidth, (int)dwImageHeight );	
+
 	m_bInit = TRUE;	
 }
 
-size_t TextDisplay::RawToBitmap( void* pImageData, size_t uiImageDataSize, 
-	void* pBitmap, size_t uiBitmapSize,
-	size_t uiWidth, size_t uiHeight, int iBytesPerPixel )
+int TextDisplay::RawToBitmap( void* pImageData, int uiImageDataSize, 
+	void* pBitmap, int uiBitmapSize,
+	int uiWidth, int uiHeight, int iBytesPerPixel )
 {
 	if( (pImageData == NULL) || (iBytesPerPixel < 3) )
 		return 0;
 
-	int dwRowPitch = uiWidth * iBytesPerPixel;
+	auto dwRowPitch = uiWidth * iBytesPerPixel;
 	while( dwRowPitch % 4 != 0 )
 		dwRowPitch++;
 	if( uiBitmapSize == 0 )
